@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JmonitorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JmonitorApplication.class, args);
-	}
+        SpringApplication.run(JmonitorApplication.class, args);
+    }
 }
