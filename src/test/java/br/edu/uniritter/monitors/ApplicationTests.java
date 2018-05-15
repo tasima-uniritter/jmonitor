@@ -1,4 +1,4 @@
-package uniritter.edu.br.jmonitor;
+package br.edu.uniritter.monitors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class JmonitorApplicationTests {
+public class ApplicationTests {
 
 	@Test
 	public void contextLoads() {

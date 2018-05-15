@@ -1,10 +1,10 @@
-package uniritter.edu.br.monitors.entity;
+package br.edu.uniritter.monitors.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uniritter.edu.br.monitors.constant.Metric;
-import uniritter.edu.br.monitors.constant.Rule;
+import br.edu.uniritter.monitors.constant.Metric;
+import br.edu.uniritter.monitors.constant.Rule;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

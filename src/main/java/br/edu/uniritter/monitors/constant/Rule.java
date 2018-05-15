@@ -1,4 +1,4 @@
-package uniritter.edu.br.monitors.constant;
+package br.edu.uniritter.monitors.constant;
 
 public enum Rule {
     LESS_THAN,

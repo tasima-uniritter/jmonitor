@@ -1,4 +1,4 @@
-package uniritter.edu.br.monitors;
+package br.edu.uniritter.monitors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

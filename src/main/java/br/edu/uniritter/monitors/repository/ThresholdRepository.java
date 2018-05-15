@@ -1,8 +1,8 @@
-package uniritter.edu.br.monitors.repository;
+package br.edu.uniritter.monitors.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import uniritter.edu.br.monitors.entity.Threshold;
+import br.edu.uniritter.monitors.entity.Threshold;
 
 @Repository
 public interface ThresholdRepository extends JpaRepository<Threshold, Long> {

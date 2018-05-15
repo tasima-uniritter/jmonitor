@@ -1,4 +1,4 @@
-package uniritter.edu.br.monitors.processor;
+package br.edu.uniritter.monitors.route.processor;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;

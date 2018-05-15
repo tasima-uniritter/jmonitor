@@ -1,16 +1,16 @@
-package uniritter.edu.br.monitors.controller;
+package br.edu.uniritter.monitors.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
-@RequestMapping("/healthcheck")
-public class HealthCheckController {
+@RequestMapping("/thresholds")
+public class ThresholdApi {
 
     @GetMapping
     String index() {
-        return "Green";
+        return "list of thresholds";
     }
 
 }

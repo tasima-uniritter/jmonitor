@@ -1,4 +1,4 @@
-package uniritter.edu.br.monitors.route;
+package br.edu.uniritter.monitors.route;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
