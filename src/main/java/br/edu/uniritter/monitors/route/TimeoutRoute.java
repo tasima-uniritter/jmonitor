@@ -7,5 +7,7 @@ import org.springframework.stereotype.Component;
 public class TimeoutRoute extends RouteBuilder {
     @Override
     public void configure() {
+        from("timer:timeout?period=10000")
+                .to("log:timeout");
     }
 }
