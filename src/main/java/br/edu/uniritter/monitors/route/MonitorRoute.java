@@ -15,7 +15,7 @@ public class MonitorRoute extends RouteBuilder {
 
     @Override
     public void configure() {
-        from("rabbitmq://user:pass@localhost/test?prefetchCount=1&threadPoolSize=1&exchangeType=fanout&skipExchangeDeclare=true")
+        from("properties:{{income.connection}}")
                 .to("log:monitor1")
                 .unmarshal().json(JsonLibrary.Gson, IncomeMessage.class)
                 .to("log:monitor2")
@@ -25,7 +25,7 @@ public class MonitorRoute extends RouteBuilder {
                         .marshal().json(JsonLibrary.Gson, true)
                         .to("log:monitor3")
                         .log("Message will send to alert queue")
-                        .to("rabbitmq://user:passs@localhost/testout?threadPoolSize=1&exchangeType=fanout&skipExchangeDeclare=true&skipQueueDeclare=true")
+                        .to("properties:{{outcome.connection}}")
                     .otherwise()
                         .log("Message will not send to alert queue")
                 .end()

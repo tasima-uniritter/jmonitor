@@ -14,7 +14,7 @@ public class MonitorProcessor implements Processor {
 
         exchange.getOut().setHeader("shouldAlert", false);
 
-        IncomeMessage incomeMessage = (IncomeMessage) exchange.getIn().getBody();
+        IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
 
         log.debug(incomeMessage.getValue().toString());
         if (incomeMessage.getValue() > 100) { // @TODO use rule
