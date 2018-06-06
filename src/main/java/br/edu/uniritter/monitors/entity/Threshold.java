@@ -30,4 +30,10 @@ public class Threshold {
 
     @NotNull
     private Long threshold;
+
+    public Boolean exceed(IncomeMessage incomeMessage) {
+
+        return  (incomeMessage.getValue() > threshold);
+//        return true;
+    }
 }

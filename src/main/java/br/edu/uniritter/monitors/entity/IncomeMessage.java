@@ -1,12 +1,20 @@
 package br.edu.uniritter.monitors.entity;
 
+import br.edu.uniritter.monitors.constant.Metric;
 import lombok.Data;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Data
 public class IncomeMessage {
     private String origin;
-    private String metric;
-    private Double value;
+
+    @Enumerated(EnumType.STRING)
+    private Metric metric;
+
+    private Long value;
+
     private Double timestamp;
 
     @Override

@@ -19,6 +19,7 @@ public class MonitorRoute extends RouteBuilder {
                 .to("log:monitor1")
                 .unmarshal().json(JsonLibrary.Gson, IncomeMessage.class)
                 .to("log:monitor2")
+                .bean(MonitorProcessor.class, "getThreshold")
                 .process(monitorProcessor)
                 .choice()
                     .when(simple("${header.shouldAlert} == true"))
