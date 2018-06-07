@@ -4,14 +4,10 @@ import br.edu.uniritter.monitors.entity.IncomeMessage;
 import br.edu.uniritter.monitors.route.processor.MonitorProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MonitorRoute extends RouteBuilder {
-
-    @Autowired
-    private MonitorProcessor monitorProcessor;
 
     @Override
     public void configure() {
@@ -20,7 +16,7 @@ public class MonitorRoute extends RouteBuilder {
                 .unmarshal().json(JsonLibrary.Gson, IncomeMessage.class)
                 .to("log:monitor2")
                 .bean(MonitorProcessor.class, "getThreshold")
-                .process(monitorProcessor)
+                .bean(MonitorProcessor.class, "setShouldAlert")
                 .choice()
                     .when(simple("${header.shouldAlert} == true"))
                         .marshal().json(JsonLibrary.Gson, true)

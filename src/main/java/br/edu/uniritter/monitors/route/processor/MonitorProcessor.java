@@ -28,25 +28,36 @@ public class MonitorProcessor implements Processor {
         exchange.getOut().setBody(incomeMessage);
     }
 
-    public IncomeMessage getThreshold(IncomeMessage incomeMessage) {
-        log.debug(">>>>> getting threshold");
+    public IncomeMessage getThreshold(Exchange exchange) {
+        log.debug(">>>>> getThreshold");
+        IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
 
+        // TODO get from database
         Threshold threshold = new Threshold();
         threshold.setMetric(Metric.MEMORY_USAGE);
         threshold.setOrigin(incomeMessage.getOrigin());
         threshold.setRule(Rule.GREATER_THAN);
-        threshold.setThreshold(Long.getLong("100"));
+        threshold.setThreshold(100L);
 
-        log.debug("<<<<< getting threshold");
+        exchange.getIn().setHeader("threshold", threshold);
+
+        log.debug("<<<<< getThreshold");
         return incomeMessage;
 
     }
 
-//    public IncomeMessage getThreshold(IncomeMessage incomeMessage) {
-//        log.debug(">>>>> getting threshold");
-//
-//        log.debug("<<<<< getting threshold");
-//        return incomeMessage;
-//
-//    }
+    public void setShouldAlert(Exchange exchange) {
+        log.debug(">>>>> setShouldAlert");
+
+        IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
+        Threshold threshold;
+        threshold = exchange.getIn().getHeader("threshold", Threshold.class);
+        if (threshold != null && threshold.exceed(incomeMessage.getValue())) {
+            exchange.getOut().setHeader("shouldAlert", true);
+        }
+        exchange.getOut().setBody(incomeMessage);
+
+        log.debug("<<<<< setShouldAlert");
+    }
+    
 }
