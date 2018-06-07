@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@Slf4j
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,9 +33,7 @@ public class Threshold {
     @NotNull
     private Long threshold;
 
-    public Boolean exceed(IncomeMessage incomeMessage) {
-
-        return  (incomeMessage.getValue() > threshold);
-//        return true;
+    public Boolean exceed(Long value) {
+        return rule.getRule().compare(value, threshold);
     }
 }

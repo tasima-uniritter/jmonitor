@@ -9,33 +9,25 @@ import static org.junit.Assert.*;
 public class ThresholdTest {
 
     @Test
-    public void shouldReturnTrueWhenMetricLessThanThresholdExceed() {
+    public void shouldReturnTrueWhenMetricGreaterThanThresholdExceed() {
 
         // given
-        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, Rule.LESS_THAN, 100L);
-
-        IncomeMessage incomeMessage = new IncomeMessage();
-        incomeMessage.setMetric(Metric.MEMORY_USAGE);
-        incomeMessage.setValue(500L);
+        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
 
         // when
-        Boolean exceed = threshold.exceed(incomeMessage);
+        Boolean exceed = threshold.exceed(500L);
 
         assertEquals(true, exceed);
     }
 
     @Test
-    public void shouldReturnFalseWhenMetricLessThanThresholdDoNotExceed() {
+    public void shouldReturnFalseWhenMetricGreaterThanThresholdDoNotExceed() {
 
         // given
-        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, Rule.LESS_THAN, 100L);
-
-        IncomeMessage incomeMessage = new IncomeMessage();
-        incomeMessage.setMetric(Metric.MEMORY_USAGE);
-        incomeMessage.setValue(99L);
+        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
 
         // when
-        Boolean exceed = threshold.exceed(incomeMessage);
+        Boolean exceed = threshold.exceed(99L);
 
         assertEquals(false, exceed);
     }

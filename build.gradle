@@ -1,15 +1,15 @@
 buildscript {
-	ext {
-		springBootVersion = '2.1.0.BUILD-SNAPSHOT'
-	}
-    repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
+    ext {
+        springBootVersion = '2.1.0.BUILD-SNAPSHOT'
     }
-	dependencies {
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    }
 }
 
 apply plugin: 'java'
@@ -21,22 +21,21 @@ group = 'br.edu.uniritter'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
-	compile("org.springframework.boot:spring-boot-devtools")
+    compile("org.springframework.boot:spring-boot-devtools")
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.apache.camel:camel-spring-boot-starter:2.17.0")
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile group: 'org.apache.camel', name: 'camel-rabbitmq', version: '2.19.2'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile group: 'org.apache.camel', name: 'camel-rabbitmq', version: '2.19.2'
     compile group: 'org.apache.camel', name: 'camel-gson', version: '2.10.4'
     runtime('com.h2database:h2')
-	compileOnly('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok')
     compile("javax.xml.bind:jaxb-api:2.3.0")
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
-
 }
