@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName;
 
 public enum Metric {
     @SerializedName("memory-usage")
-    MEMORY_USAGE;
+    MEMORY_USAGE
 }

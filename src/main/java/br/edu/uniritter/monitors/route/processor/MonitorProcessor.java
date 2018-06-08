@@ -6,29 +6,13 @@ import br.edu.uniritter.monitors.entity.IncomeMessage;
 import br.edu.uniritter.monitors.entity.Threshold;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MonitorProcessor implements Processor {
+public class MonitorProcessor {
 
-    public void process(Exchange exchange) throws Exception {
-
-        exchange.getOut().setHeader("shouldAlert", false);
-
-        IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
-
-        log.debug("income message {}", incomeMessage.getValue().toString());
-        log.debug("income message {}", incomeMessage.getMetric().toString());
-        log.debug(incomeMessage.getValue().toString());
-        if (incomeMessage.getValue() > 100) { // @TODO use rule
-            exchange.getOut().setHeader("shouldAlert", true);
-        }
-        exchange.getOut().setBody(incomeMessage);
-    }
-
-    public IncomeMessage getThreshold(Exchange exchange) {
+    public void getThreshold(Exchange exchange) {
         log.debug(">>>>> getThreshold");
         IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
 
@@ -37,13 +21,11 @@ public class MonitorProcessor implements Processor {
         threshold.setMetric(Metric.MEMORY_USAGE);
         threshold.setOrigin(incomeMessage.getOrigin());
         threshold.setRule(Rule.GREATER_THAN);
-        threshold.setThreshold(100L);
+        threshold.setThreshold(300L);
 
-        exchange.getIn().setHeader("threshold", threshold);
-
+        exchange.getOut().setHeader("threshold", threshold);
+        exchange.getOut().setBody(incomeMessage);
         log.debug("<<<<< getThreshold");
-        return incomeMessage;
-
     }
 
     public void setShouldAlert(Exchange exchange) {
@@ -53,11 +35,15 @@ public class MonitorProcessor implements Processor {
         Threshold threshold;
         threshold = exchange.getIn().getHeader("threshold", Threshold.class);
         if (threshold != null && threshold.exceed(incomeMessage.getValue())) {
+//            log.debug("shouldAlert true {} > {} {}",
+//                incomeMessage.getValue(),
+//                threshold.getThreshold(),
+//                incomeMessage.getValue() > threshold.getThreshold());
             exchange.getOut().setHeader("shouldAlert", true);
         }
         exchange.getOut().setBody(incomeMessage);
 
         log.debug("<<<<< setShouldAlert");
     }
-    
+
 }
