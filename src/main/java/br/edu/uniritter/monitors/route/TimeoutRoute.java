@@ -16,12 +16,12 @@ public class TimeoutRoute extends RouteBuilder {
     @Override
     public void configure() {
         IncomeMessage incomeMessage = new IncomeMessage("some-origin", Metric.MEMORY_USAGE, 500L, new Date().getTime());
-//        from("timer:timeout?period=10000")
-//            .process(exchange -> {
-//                incomeMessage.setValue((long)(new Random().nextDouble()*(600L)));
-//                incomeMessage.setTimestamp(new Date().getTime());
-//                log.debug("---->>> {}", incomeMessage.toString());
-//                exchange.getOut().setBody(incomeMessage.toString());
-//            }).to("properties:{{income.connection}}");
+        from("timer:timeout?period=10000")
+            .process(exchange -> {
+                incomeMessage.setValue((long)(new Random().nextDouble()*(600L)));
+                incomeMessage.setTimestamp(new Date().getTime());
+                log.debug("---->>> {}", incomeMessage.toString());
+                exchange.getOut().setBody(incomeMessage.toString());
+            }).to("properties:{{income.connection}}");
     }
 }
