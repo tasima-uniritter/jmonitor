@@ -1,7 +1,7 @@
 package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
-import br.edu.uniritter.monitors.constant.Rule;
+import br.edu.uniritter.monitors.contracts.ThresholdRule;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,7 @@ public class OutputMessage {
 
     private Long timestamp;
 
-    private Rule rule;
+    private ThresholdRule rule;
 
     private Long threshold;
 

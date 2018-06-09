@@ -1,10 +1,10 @@
 package br.edu.uniritter.monitors.route.processor;
 
 import br.edu.uniritter.monitors.constant.Metric;
-import br.edu.uniritter.monitors.constant.Rule;
 import br.edu.uniritter.monitors.entity.IncomeMessage;
 import br.edu.uniritter.monitors.entity.OutputMessage;
 import br.edu.uniritter.monitors.entity.Threshold;
+import br.edu.uniritter.monitors.rules.GreaterThan;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class MonitorProcessor {
         Threshold threshold = new Threshold();
         threshold.setMetric(Metric.MEMORY_USAGE);
         threshold.setOrigin(incomeMessage.getOrigin());
-        threshold.setRule(Rule.GREATER_THAN);
+        threshold.setRule(new GreaterThan());
         threshold.setThreshold(300L);
 
         exchange.getOut().setHeader("threshold", threshold);

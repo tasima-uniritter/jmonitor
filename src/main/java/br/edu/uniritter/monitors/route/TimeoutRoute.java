@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.Random;
 
 @Slf4j
-@Component
+//@Component
 public class TimeoutRoute extends RouteBuilder {
     @Override
     public void configure() {
