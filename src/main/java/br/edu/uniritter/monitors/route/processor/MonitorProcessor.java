@@ -3,6 +3,7 @@ package br.edu.uniritter.monitors.route.processor;
 import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
 import br.edu.uniritter.monitors.entity.IncomeMessage;
+import br.edu.uniritter.monitors.entity.OutputMessage;
 import br.edu.uniritter.monitors.entity.Threshold;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
@@ -40,8 +41,21 @@ public class MonitorProcessor {
 //                threshold.getThreshold(),
 //                incomeMessage.getValue() > threshold.getThreshold());
             exchange.getOut().setHeader("shouldAlert", true);
+
+            OutputMessage outputMessage = new OutputMessage(
+                incomeMessage.getOrigin(),
+                incomeMessage.getMetric(),
+                incomeMessage.getValue(),
+                incomeMessage.getTimestamp(),
+                threshold.getRule(),
+                threshold.getThreshold()
+            );
+            exchange.getOut().setBody(outputMessage);
+            log.debug("shouldAlert true {} > {} {}",
+                incomeMessage.getValue(),
+                threshold.getThreshold(),
+                outputMessage);
         }
-        exchange.getOut().setBody(incomeMessage);
 
         log.debug("<<<<< setShouldAlert");
     }

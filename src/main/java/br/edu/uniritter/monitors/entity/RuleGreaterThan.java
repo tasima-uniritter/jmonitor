@@ -1,7 +1,9 @@
 package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.contracts.ThresholdRule;
+import lombok.ToString;
 
+//@ToString
 public class RuleGreaterThan implements ThresholdRule {
 
     @Override
@@ -11,6 +13,6 @@ public class RuleGreaterThan implements ThresholdRule {
 
     @Override
     public String toString() {
-        return "GREATER_THAN";
+        return this.getClass().getSimpleName();
     }
 }
