@@ -1,14 +1,14 @@
 package br.edu.uniritter.monitors.entity;
 
+import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.contracts.ThresholdRule;
 import br.edu.uniritter.monitors.converters.RuleConverter;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import br.edu.uniritter.monitors.constant.Metric;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.camel.impl.converter.ToStringTypeConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,5 +38,16 @@ public class Threshold {
 
     public Boolean exceed(Long value) {
         return rule.compare(value, threshold);
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

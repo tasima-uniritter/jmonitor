@@ -3,7 +3,10 @@ package br.edu.uniritter.monitors.entity;
 import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.contracts.ThresholdRule;
 import br.edu.uniritter.monitors.converters.RuleConverter;
-import com.google.gson.Gson;
+import br.edu.uniritter.monitors.converters.ThresholdRuleSerializer;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -32,18 +35,12 @@ public class OutputMessage {
 
     @Override
     public String toString() {
-
-        Gson g = new Gson();
-        return g.toJson(this);
-
-//        return String.format("{" +
-//            "\"origin\": \"%s\"," +
-//            "\"metric\": \"%s\"," +
-//            "\"timestamp\": %s," +
-//            "\"value\": %s," +
-//            "\"rule\": \"%s\"," +
-//            "\"threshold\": %s" +
-//            "}", origin, metric, timestamp, value, rule, threshold
-//        );
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

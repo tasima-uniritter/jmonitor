@@ -23,6 +23,7 @@ public class MonitorProcessor {
         threshold.setOrigin(incomeMessage.getOrigin());
         threshold.setRule(new GreaterThan());
         threshold.setThreshold(300L);
+        log.debug("{}", threshold);
 
         exchange.getOut().setHeader("threshold", threshold);
         exchange.getOut().setBody(incomeMessage);
