@@ -1,7 +1,10 @@
 # pda-a-monitors #
 ### How to  ###
+
 Install gradle dependencies 
+
 Install Lombok plugin
+
 Run docker file in root directory
 ``` ssh
   docker-compose up mq
