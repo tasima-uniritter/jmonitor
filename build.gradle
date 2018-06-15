@@ -13,6 +13,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.sonarqube" version "2.6"
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -40,6 +44,7 @@ dependencies {
     compileOnly('org.projectlombok:lombok')
     compile("javax.xml.bind:jaxb-api:2.3.0")
     compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
 }
