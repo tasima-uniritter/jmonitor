@@ -1,4 +1,7 @@
 # pda-a-monitors #
+
+[![Build Status](https://travis-ci.org/tasima-uniritter/pda-a-monitors.svg?branch=master)](https://travis-ci.org/tasima-uniritter/pda-a-monitors) ![Build Status](https://sonarcloud.io/api/project_badges/measure?project=br.edu.uniritter%3Amonitors&metric=coverage)
+
 ### How to  ###
 
 Install gradle dependencies 
