@@ -1,16 +1,17 @@
 package br.edu.uniritter.monitors.entity;
 
+import br.edu.uniritter.monitors.rules.LessThan;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class RuleLessThanTest {
+public class LessThanTest {
 
     @Test
     public void shouldReturnTrueWhenValueIsLessThanThreshold() {
 
         // given the threshold is 100
-        RuleLessThan rule = new RuleLessThan();
+        LessThan rule = new LessThan();
         Long threshold = 100L;
 
         // when I run compare from value 99
@@ -24,7 +25,7 @@ public class RuleLessThanTest {
     public void shouldReturnFalseWhenValueIsGreaterThanThreshold() {
 
         // given the threshold is 100
-        RuleLessThan rule = new RuleLessThan();
+        LessThan rule = new LessThan();
         Long threshold = 100L;
 
         // when I run compare from value 101
@@ -38,7 +39,7 @@ public class RuleLessThanTest {
     public void shouldReturnFalseWhenValueIsEqualToThreshold() {
 
         // given the threshold is 100
-        RuleLessThan rule = new RuleLessThan();
+        LessThan rule = new LessThan();
         Long threshold = 100L;
 
         // when I run compare from value 100

@@ -1,16 +1,17 @@
 package br.edu.uniritter.monitors.entity;
 
+import br.edu.uniritter.monitors.rules.GreaterThanEqual;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class RuleGreaterThanTest {
+public class GreaterThanEqualTest {
 
     @Test
     public void shouldReturnTrueWhenValueIsGreaterThanThreshold() {
 
         // given the threshold is 100
-        RuleGreaterThan rule = new RuleGreaterThan();
+        GreaterThanEqual rule = new GreaterThanEqual();
         Long threshold = 100L;
 
         // when I run compare from value 101
@@ -24,7 +25,7 @@ public class RuleGreaterThanTest {
     public void shouldReturnFalseWhenValueIsLessThanThreshold() {
 
         // given the threshold is 100
-        RuleGreaterThan rule = new RuleGreaterThan();
+        GreaterThanEqual rule = new GreaterThanEqual();
         Long threshold = 100L;
 
         // when I run compare from value 99
@@ -34,18 +35,19 @@ public class RuleGreaterThanTest {
         assertEquals(false, result);
     }
 
+
     @Test
-    public void shouldReturnFalseWhenValueIsEqualToThreshold() {
+    public void shouldReturnTrueWhenValueIsEqualToThreshold() {
 
         // given the threshold is 100
-        RuleGreaterThan rule = new RuleGreaterThan();
+        GreaterThanEqual rule = new GreaterThanEqual();
         Long threshold = 100L;
 
         // when I run compare from value 100
         Boolean result = rule.compare(100L, threshold);
 
         // then I expect true
-        assertEquals(false, result);
+        assertEquals(true, result);
     }
 
 }

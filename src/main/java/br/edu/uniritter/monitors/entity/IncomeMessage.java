@@ -1,8 +1,11 @@
 package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class IncomeMessage {
     private String origin;
 
@@ -23,13 +27,12 @@ public class IncomeMessage {
 
     @Override
     public String toString() {
-
-        return String.format("{" +
-                "\"origin\": \"%s\"," +
-                "\"metric\": \"%s\"," +
-                "\"timestamp\": %s," +
-                "\"value\": %s" +
-                "}", origin, metric, timestamp, value
-        );
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

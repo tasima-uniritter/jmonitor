@@ -1,16 +1,17 @@
 package br.edu.uniritter.monitors.entity;
 
+import br.edu.uniritter.monitors.rules.NotEqual;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class RuleNotEqualTest {
+public class NotEqualTest {
 
     @Test
     public void shouldReturnTrueWhenValueIsNotEqualThreshold() {
 
         // given the threshold is 10
-        RuleNotEqual rule = new RuleNotEqual();
+        NotEqual rule = new NotEqual();
         Long threshold = 10L;
 
         // when I run compare from value 11
@@ -24,7 +25,7 @@ public class RuleNotEqualTest {
     public void shouldReturnFalseWhenValueIsEqualThreshold() {
 
         // given the threshold is 1
-        RuleNotEqual rule = new RuleNotEqual();
+        NotEqual rule = new NotEqual();
         Long threshold = 1L;
 
         // when I run compare from value 1
