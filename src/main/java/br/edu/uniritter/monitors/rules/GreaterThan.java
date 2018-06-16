@@ -11,8 +11,4 @@ public class GreaterThan extends ThresholdRule {
     public Boolean compare(Long value, Long threshold) {
         return value > threshold;
     }
-
-    public String toString() {
-        return UPPER_CAMEL.to(UPPER_UNDERSCORE, this.getClass().getSimpleName());
-    }
 }
