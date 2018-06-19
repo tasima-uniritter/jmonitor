@@ -18,7 +18,7 @@ with credentials: admin / admin
 
 Go in Exchanges and create 2 fanout exchanges: test and testout
 
-Check income.connection in application.properties to set localhost queues
+Check income.connection in application.yml to set localhost queues
 
 ### .env file
 
