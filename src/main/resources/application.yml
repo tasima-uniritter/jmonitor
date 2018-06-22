@@ -1,0 +1,67 @@
+server:
+  port: ${port:3000}
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:pda-a-monitors;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+
+  devtools:
+    remote:
+      secret: nevergonnagiveyouup
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+logging:
+  level:
+    br.edu.uniritter.monitors: DEBUG
+
+amqp-protocol: amqps
+amqp-host: b-79e24b8a-cd93-48a3-b234-9d75e05e3def-1.mq.us-east-1.amazonaws.com
+amqp-port: 5671
+amqp-username: tda-monitors-a
+
+income:
+  connection: amqp:queue:a-metrics-monitor
+
+outcome:
+  connection: amqp:queue:a-monitors-monitor
+
+---
+spring:
+  profiles: heroku
+
+amqp-protocol: amqp
+amqp-host: eagle.rmq.cloudamqp.com
+amqp-port: 80
+amqp-username: hishlufx
+
+income:
+  connection: amqp:queue:a-metrics-monitor
+
+outcome:
+  connection: amqp:queue:a-monitors-monitor
+
+---
+spring:
+  profiles: local
+
+income:
+  connection: rabbitmq://localhost/a-metrics-monitor?username=admin&password=${RABBITMQ_SERVICE_PASSWORD:admin}&prefetchCount=1&threadPoolSize=1&queue=a-metrics-monitor
+
+outcome:
+  connection: rabbitmq://localhost/a-monitors-monitor?username=admin&password=${RABBITMQ_SERVICE_PASSWORD:admin}&threadPoolSize=1&queue=a-monitors-monitor

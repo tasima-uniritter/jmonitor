@@ -4,7 +4,7 @@
 
 ### How to  ###
 
-Install gradle dependencies 
+Install gradle dependencies
 
 Install Lombok plugin
 
@@ -13,9 +13,18 @@ Run docker file in root directory
   docker-compose up mq
 ```
 
-Access  [http://localhost:15672/](http://localhost:15672/)  
+Access  [http://localhost:15672/](http://localhost:15672/)
 with credentials: admin / admin
 
 Go in Exchanges and create 2 fanout exchanges: test and testout
 
-Check income.connection in application.properties to set localhost queues
+Check income.connection in application.yml to set localhost queues
+
+### .env file
+
+This project use [.env](https://github.com/cdimascio/java-dotenv) file, create it on root project folder
+with this content
+
+```
+AMQP_SERVICE_PASSWORD=******
+```
