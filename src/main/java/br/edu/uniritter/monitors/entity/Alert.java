@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @Data
 @AllArgsConstructor
-public class OutputMessage {
+public class Alert {
     private String origin;
 
     @Enumerated(EnumType.STRING)

@@ -1,7 +1,6 @@
 package br.edu.uniritter.monitors.route;
 
-import br.edu.uniritter.monitors.entity.IncomeMessage;
-import br.edu.uniritter.monitors.entity.OutputMessage;
+import br.edu.uniritter.monitors.entity.Metric;
 import br.edu.uniritter.monitors.route.processor.MonitorProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
@@ -14,7 +13,7 @@ public class MonitorRoute extends RouteBuilder {
     public void configure() {
         from("properties:{{income.connection}}")
                 .to("log:monitor1")
-                .unmarshal().json(JsonLibrary.Jackson, IncomeMessage.class)
+                .unmarshal().json(JsonLibrary.Jackson, Metric.class)
                 .to("log:monitor2")
                 .bean(MonitorProcessor.class, "getThreshold")
                 .bean(MonitorProcessor.class, "setShouldAlert")

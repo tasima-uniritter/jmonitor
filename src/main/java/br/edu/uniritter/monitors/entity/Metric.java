@@ -1,6 +1,5 @@
 package br.edu.uniritter.monitors.entity;
 
-import br.edu.uniritter.monitors.constant.Metric;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -16,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IncomeMessage {
+public class Metric {
     private String origin;
 
     @Enumerated(EnumType.STRING)
-    private Metric metric;
+    private br.edu.uniritter.monitors.constant.Metric metric;
 
     @NotNull
     private Long value;
