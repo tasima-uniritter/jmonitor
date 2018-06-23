@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
 public class ThresholdServiceTest {
@@ -48,6 +49,18 @@ public class ThresholdServiceTest {
     }
 
     @Test
+    public void shouldFindNullWhenFindAll() {
+
+        // given the mocked threshold repository
+        // when I call service All and it does not find anything
+        Mockito.when(thresholdRepository.findAll()).thenReturn(null);
+
+        // then I expect null
+        assertNull(thresholdService.all());
+
+    }
+
+    @Test
     public void shouldCallThresholdRepositoryFindOneByOriginAndMetric() {
 
         // given the mocked threshold
@@ -63,5 +76,15 @@ public class ThresholdServiceTest {
         assertEquals(threshold.getId(), thresholdFounded.getId());
     }
 
+    @Test
+    public void shouldFindNullWhenFindOneByOriginAndMetric() {
 
+        // given the mocked threshold repository
+        // when I call findOneByOriginAndMetric and it does not find anything
+        Mockito.when(thresholdRepository.findOneByOriginAndMetric("some-origin", Metric.MEMORY_USAGE)).thenReturn(null);
+
+        // then I expect null
+        assertNull(thresholdService.findOneByOriginAndMetric("some-origin", Metric.MEMORY_USAGE));
+
+    }
 }
