@@ -16,8 +16,8 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "thresholds")
-public class Threshold {
+@Entity(name = "monitors")
+public class Monitor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +35,7 @@ public class Threshold {
     @NotNull
     private Long threshold;
 
-    public Boolean exceed(Long value) {
+    public Boolean compare(Long value) {
         return rule.compare(value, threshold);
     }
 

@@ -6,16 +6,16 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ThresholdTest {
+public class MonitorTest {
 
     @Test
     public void shouldReturnTrueWhenMetricGreaterThanThresholdExceed() {
 
         // given
-        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
+        Monitor monitor = new Monitor(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
 
         // when
-        Boolean exceed = threshold.exceed(500L);
+        Boolean exceed = monitor.compare(500L);
 
         assertEquals(true, exceed);
     }
@@ -24,10 +24,10 @@ public class ThresholdTest {
     public void shouldReturnFalseWhenMetricGreaterThanThresholdDoNotExceed() {
 
         // given
-        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
+        Monitor monitor = new Monitor(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
 
         // when
-        Boolean exceed = threshold.exceed(99L);
+        Boolean exceed = monitor.compare(99L);
 
         assertEquals(false, exceed);
     }
