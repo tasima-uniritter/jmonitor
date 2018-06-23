@@ -13,12 +13,15 @@ public class QueueConfig {
     private ApplicationConfig applicationConfig;
 
     @Bean
-    AMQPConnectionDetails securedAmqpConnection() {
+    AMQPConnectionDetails securedAmqpConnection() throws Exception {
         String url = String.format("%s://%s:%s",
             applicationConfig.getAmqpProtocol(),
             applicationConfig.getAmqpHost(),
             applicationConfig.getAmqpPort());
-        String password = Dotenv.configure().directory("./").load().get("AMQP_SERVICE_PASSWORD");
+        String password = Dotenv.configure().ignoreIfMissing().directory("./").load().get("AMQP_SERVICE_PASSWORD");
+        if (password == null) {
+            throw new Exception("Missing AMQP_SERVICE_PASSWORD environment variable");
+        }
         return new AMQPConnectionDetails(url, applicationConfig.getAmqpUsername(), password);
     }
 

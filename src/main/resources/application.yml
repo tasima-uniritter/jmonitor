@@ -39,7 +39,7 @@ income:
   connection: amqp:queue:a-metrics-monitor
 
 outcome:
-  connection: amqp:queue:a-monitors-monitor
+  connection: amqp:queue:a-monitor-alerts
 
 ---
 spring:
@@ -54,7 +54,7 @@ income:
   connection: amqp:queue:a-metrics-monitor
 
 outcome:
-  connection: amqp:queue:a-monitors-monitor
+  connection: amqp:queue:a-monitor-alerts
 
 ---
 spring:
@@ -64,4 +64,4 @@ income:
   connection: rabbitmq://localhost/a-metrics-monitor?username=admin&password=${RABBITMQ_SERVICE_PASSWORD:admin}&prefetchCount=1&threadPoolSize=1&queue=a-metrics-monitor
 
 outcome:
-  connection: rabbitmq://localhost/a-monitors-monitor?username=admin&password=${RABBITMQ_SERVICE_PASSWORD:admin}&threadPoolSize=1&queue=a-monitors-monitor
+  connection: rabbitmq://localhost/a-monitors-monitor?username=admin&password=${RABBITMQ_SERVICE_PASSWORD:admin}&threadPoolSize=1&queue=a-monitor-alerts
