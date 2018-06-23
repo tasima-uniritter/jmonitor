@@ -45,8 +45,8 @@ public class Threshold {
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return null;
+            log.error(e.getMessage(), e);
+            return "";
         }
     }
 }
