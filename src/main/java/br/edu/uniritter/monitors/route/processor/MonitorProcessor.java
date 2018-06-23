@@ -1,7 +1,7 @@
 package br.edu.uniritter.monitors.route.processor;
 
-import br.edu.uniritter.monitors.entity.IncomeMessage;
-import br.edu.uniritter.monitors.entity.OutputMessage;
+import br.edu.uniritter.monitors.entity.Metric;
+import br.edu.uniritter.monitors.entity.Alert;
 import br.edu.uniritter.monitors.entity.Threshold;
 import br.edu.uniritter.monitors.service.ThresholdService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,42 +18,38 @@ public class MonitorProcessor {
 
     public void getThreshold(Exchange exchange) {
         log.debug(">>>>> getThreshold");
-        IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
+        Metric metric = exchange.getIn().getBody(Metric.class);
 
-        Threshold threshold = thresholdService.findOneByOriginAndMetric(incomeMessage.getOrigin(), incomeMessage.getMetric());
+        Threshold threshold = thresholdService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
         log.debug("{}", threshold);
 
         exchange.getOut().setHeader("threshold", threshold);
-        exchange.getOut().setBody(incomeMessage);
+        exchange.getOut().setBody(metric);
         log.debug("<<<<< getThreshold");
     }
 
     public void setShouldAlert(Exchange exchange) {
         log.debug(">>>>> setShouldAlert");
 
-        IncomeMessage incomeMessage = exchange.getIn().getBody(IncomeMessage.class);
+        Metric metric = exchange.getIn().getBody(Metric.class);
         Threshold threshold;
         threshold = exchange.getIn().getHeader("threshold", Threshold.class);
-        if (threshold != null && threshold.exceed(incomeMessage.getValue())) {
-//            log.debug("shouldAlert true {} > {} {}",
-//                incomeMessage.getValue(),
-//                threshold.getThreshold(),
-//                incomeMessage.getValue() > threshold.getThreshold());
+        if (threshold != null && threshold.exceed(metric.getValue())) {
             exchange.getOut().setHeader("shouldAlert", true);
 
-            OutputMessage outputMessage = new OutputMessage(
-                incomeMessage.getOrigin(),
-                incomeMessage.getMetric(),
-                incomeMessage.getValue(),
-                incomeMessage.getTimestamp(),
+            Alert alert = new Alert(
+                metric.getOrigin(),
+                metric.getMetric(),
+                metric.getValue(),
+                metric.getTimestamp(),
                 threshold.getRule(),
                 threshold.getThreshold()
             );
-            exchange.getOut().setBody(outputMessage);
+            exchange.getOut().setBody(alert);
             log.debug("shouldAlert true {} > {} {}",
-                incomeMessage.getValue(),
+                metric.getValue(),
                 threshold.getThreshold(),
-                outputMessage);
+                alert);
         }
 
         log.debug("<<<<< setShouldAlert");
