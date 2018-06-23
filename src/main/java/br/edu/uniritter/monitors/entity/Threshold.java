@@ -2,8 +2,6 @@ package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
-import br.edu.uniritter.monitors.contracts.ThresholdRule;
-import br.edu.uniritter.monitors.converters.RuleConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

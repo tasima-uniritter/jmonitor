@@ -2,16 +2,11 @@ package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
-import br.edu.uniritter.monitors.contracts.ThresholdRule;
-import br.edu.uniritter.monitors.converters.RuleConverter;
-import br.edu.uniritter.monitors.converters.ThresholdRuleSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import javax.persistence.Convert;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;

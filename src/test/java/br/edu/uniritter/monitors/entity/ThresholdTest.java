@@ -2,7 +2,6 @@ package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
-import br.edu.uniritter.monitors.rules.GreaterThan;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
