@@ -1,6 +1,7 @@
 package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
+import br.edu.uniritter.monitors.constant.Rule;
 import br.edu.uniritter.monitors.contracts.ThresholdRule;
 import br.edu.uniritter.monitors.converters.RuleConverter;
 import br.edu.uniritter.monitors.converters.ThresholdRuleSerializer;
@@ -28,8 +29,8 @@ public class OutputMessage {
 
     private Long timestamp;
 
-    @Convert(converter = RuleConverter.class)
-    private ThresholdRule rule;
+    @Enumerated(EnumType.STRING)
+    private Rule rule;
 
     private Long threshold;
 
