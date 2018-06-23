@@ -1,9 +1,9 @@
 package br.edu.uniritter.monitors.route.processor;
 
-import br.edu.uniritter.monitors.entity.Metric;
 import br.edu.uniritter.monitors.entity.Alert;
-import br.edu.uniritter.monitors.entity.Threshold;
-import br.edu.uniritter.monitors.service.ThresholdService;
+import br.edu.uniritter.monitors.entity.Metric;
+import br.edu.uniritter.monitors.entity.Monitor;
+import br.edu.uniritter.monitors.service.MonitorService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +14,27 @@ import org.springframework.stereotype.Component;
 public class MonitorProcessor {
 
     @Autowired
-    private ThresholdService thresholdService;
+    private MonitorService monitorService;
 
-    public void getThreshold(Exchange exchange) {
-        log.debug(">>>>> getThreshold");
+    public void getMonitor(Exchange exchange) {
+        log.debug(">>>>> getMonitor");
         Metric metric = exchange.getIn().getBody(Metric.class);
 
-        Threshold threshold = thresholdService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
-        log.debug("{}", threshold);
+        Monitor monitor = monitorService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
+        log.debug("{}", metric);
 
-        exchange.getOut().setHeader("threshold", threshold);
+        exchange.getOut().setHeader("monitor", monitor);
         exchange.getOut().setBody(metric);
-        log.debug("<<<<< getThreshold");
+        log.debug("<<<<< getMonitor");
     }
 
     public void setShouldAlert(Exchange exchange) {
         log.debug(">>>>> setShouldAlert");
 
         Metric metric = exchange.getIn().getBody(Metric.class);
-        Threshold threshold;
-        threshold = exchange.getIn().getHeader("threshold", Threshold.class);
-        if (threshold != null && threshold.exceed(metric.getValue())) {
+        Monitor monitor;
+        monitor = exchange.getIn().getHeader("monitor", Monitor.class);
+        if (monitor != null && monitor.compare(metric.getValue())) {
             exchange.getOut().setHeader("shouldAlert", true);
 
             Alert alert = new Alert(
@@ -42,13 +42,13 @@ public class MonitorProcessor {
                 metric.getMetric(),
                 metric.getValue(),
                 metric.getTimestamp(),
-                threshold.getRule(),
-                threshold.getThreshold()
+                monitor.getRule(),
+                monitor.getThreshold()
             );
             exchange.getOut().setBody(alert);
             log.debug("shouldAlert true {} > {} {}",
                 metric.getValue(),
-                threshold.getThreshold(),
+                monitor.getThreshold(),
                 alert);
         }
 
