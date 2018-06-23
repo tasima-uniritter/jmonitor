@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApplicationConfig {
 
+    private Dotenv dotenv = Dotenv.configure().ignoreIfMissing().directory("./").load();
+
     @Value("${amqp-protocol}")
     private String amqpProtocol;
 
@@ -23,11 +25,11 @@ public class ApplicationConfig {
 
     private String amqpPassword;
 
-    public String getPasswod() {
-        String password = Dotenv.configure().ignoreIfMissing().directory("./").load().get("AMQP_SERVICE_PASSWORD");
-        if (password == null) {
+    public String getAmqpPassword() {
+        amqpPassword = dotenv.get("AMQP_SERVICE_PASSWORD");
+        if (amqpPassword == null) {
             throw new IllegalArgumentException("Missing AMQP_SERVICE_PASSWORD environment variable");
         }
-        return password;
+        return amqpPassword;
     }
 }
