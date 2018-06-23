@@ -1,20 +1,21 @@
 package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
+import br.edu.uniritter.monitors.contracts.ThresholdRule;
+import br.edu.uniritter.monitors.converters.RuleConverter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import javax.persistence.Convert;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class IncomeMessage {
+public class Alert {
     private String origin;
 
     @Enumerated(EnumType.STRING)
@@ -24,6 +25,11 @@ public class IncomeMessage {
     private Long value;
 
     private Long timestamp;
+
+    @Convert(converter = RuleConverter.class)
+    private ThresholdRule rule;
+
+    private Long threshold;
 
     @Override
     public String toString() {
