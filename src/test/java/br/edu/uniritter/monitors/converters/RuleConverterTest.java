@@ -21,7 +21,7 @@ public class RuleConverterTest {
         String result = ruleConverter.convertToDatabaseColumn(thresholdRule);
 
         // then I expect the respective column
-        assertEquals("EQUAL",result );
+        assertEquals(thresholdRule.toString(),result );
     }
 
     @Test
@@ -31,7 +31,8 @@ public class RuleConverterTest {
         RuleConverter ruleConverter = new RuleConverter();
 
         // when I convert to Equal entity
-        ThresholdRule result = ruleConverter.convertToEntityAttribute("EQUAL");
+        Equal equal = new Equal();
+        ThresholdRule result = ruleConverter.convertToEntityAttribute(equal.toString());
 
         // then I expect the Equal Entity
         assertEquals(Equal.class,result.getClass());
@@ -45,7 +46,8 @@ public class RuleConverterTest {
         RuleConverter ruleConverter = new RuleConverter();
 
         // when I convert to Greater Than entity
-        ThresholdRule result = ruleConverter.convertToEntityAttribute("GREATER_THAN");
+        GreaterThan greaterThan = new GreaterThan();
+        ThresholdRule result = ruleConverter.convertToEntityAttribute(greaterThan.toString());
 
         // then I expect the  Greater Than entity
         assertEquals(GreaterThan.class,result.getClass());
