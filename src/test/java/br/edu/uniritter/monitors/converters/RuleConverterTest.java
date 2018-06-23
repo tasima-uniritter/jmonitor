@@ -4,7 +4,6 @@ import br.edu.uniritter.monitors.contracts.ThresholdRule;
 import br.edu.uniritter.monitors.rules.Equal;
 import br.edu.uniritter.monitors.rules.GreaterThan;
 import org.junit.Test;
-import org.mockito.internal.matchers.Null;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -21,7 +20,7 @@ public class RuleConverterTest {
         String result = ruleConverter.convertToDatabaseColumn(thresholdRule);
 
         // then I expect the respective column
-        assertEquals(thresholdRule.toString(),result );
+        assertEquals(thresholdRule.toString(), result);
     }
 
     @Test
@@ -35,7 +34,7 @@ public class RuleConverterTest {
         ThresholdRule result = ruleConverter.convertToEntityAttribute(equal.toString());
 
         // then I expect the Equal Entity
-        assertEquals(Equal.class,result.getClass());
+        assertEquals(Equal.class, result.getClass());
 
     }
 
@@ -50,7 +49,7 @@ public class RuleConverterTest {
         ThresholdRule result = ruleConverter.convertToEntityAttribute(greaterThan.toString());
 
         // then I expect the  Greater Than entity
-        assertEquals(GreaterThan.class,result.getClass());
+        assertEquals(GreaterThan.class, result.getClass());
 
     }
 
@@ -67,8 +66,6 @@ public class RuleConverterTest {
         assertNull(result);
 
     }
-
-
 
 
 }

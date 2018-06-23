@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-
 import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ThresholdServiceTest {
 
@@ -29,7 +26,7 @@ public class ThresholdServiceTest {
     private ThresholdService thresholdService;
 
     @Before
-    public void initMocks(){
+    public void initMocks() {
         MockitoAnnotations.initMocks(this);
     }
 
@@ -37,7 +34,7 @@ public class ThresholdServiceTest {
     public void shouldCallThresholdRepositoryFindAll() {
 
         // given the mocked thresholds
-        List<Threshold> thresholds =  new ArrayList<Threshold>();
+        List<Threshold> thresholds = new ArrayList<Threshold>();
         thresholds.add(new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, new GreaterThan(), 100L));
 
         // when I call service All
@@ -46,7 +43,7 @@ public class ThresholdServiceTest {
         List<Threshold> thresholdsFounded = thresholdService.all();
 
         // then I expect all thresholds
-        assertSame(thresholds,thresholdsFounded);
+        assertSame(thresholds, thresholdsFounded);
 
     }
 
@@ -54,19 +51,17 @@ public class ThresholdServiceTest {
     public void shouldCallThresholdRepositoryFindOneByOriginAndMetric() {
 
         // given the mocked threshold
-        Threshold threshold =  new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, new GreaterThan(), 100L);
+        Threshold threshold = new Threshold(1L, "some-origin", Metric.MEMORY_USAGE, new GreaterThan(), 100L);
 
 
         // when I call service findOneByOriginAndMetric
-        Mockito.when(thresholdRepository.findOneByOriginAndMetric("some-origin",Metric.MEMORY_USAGE)).thenReturn(threshold);
+        Mockito.when(thresholdRepository.findOneByOriginAndMetric("some-origin", Metric.MEMORY_USAGE)).thenReturn(threshold);
 
-        Threshold thresholdFounded = thresholdService.findOneByOriginAndMetric("some-origin",Metric.MEMORY_USAGE);
+        Threshold thresholdFounded = thresholdService.findOneByOriginAndMetric("some-origin", Metric.MEMORY_USAGE);
 
         // then I expect the threshold
-        assertEquals(threshold.getId(),thresholdFounded.getId());
+        assertEquals(threshold.getId(), thresholdFounded.getId());
     }
-
-
 
 
 }
