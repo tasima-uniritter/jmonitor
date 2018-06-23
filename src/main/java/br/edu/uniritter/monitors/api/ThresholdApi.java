@@ -3,10 +3,9 @@ package br.edu.uniritter.monitors.api;
 import br.edu.uniritter.monitors.entity.Threshold;
 import br.edu.uniritter.monitors.service.ThresholdService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController()
@@ -19,5 +18,10 @@ public class ThresholdApi {
     @GetMapping
     public List<Threshold> index() {
         return thresholdService.all();
+    }
+
+    @PostMapping
+    public Threshold store(@Valid @RequestBody Threshold threshold) {
+        return threshold;
     }
 }
