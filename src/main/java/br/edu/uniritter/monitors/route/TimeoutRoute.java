@@ -1,5 +1,6 @@
 package br.edu.uniritter.monitors.route;
 
+import br.edu.uniritter.monitors.constant.MetricName;
 import br.edu.uniritter.monitors.entity.Metric;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.builder.RouteBuilder;
@@ -13,13 +14,13 @@ import java.util.Random;
 public class TimeoutRoute extends RouteBuilder {
     @Override
     public void configure() {
-        Metric incomeMessage = new Metric("PC-0", br.edu.uniritter.monitors.constant.Metric.MEMORY_USAGE, 200L, new Date().getTime());
+        Metric metric = new Metric("PC-0", MetricName.MEMORY_USAGE, 200L, new Date().getTime());
         from("timer:timeout?period=10000")
             .process(exchange -> {
-                incomeMessage.setValue((long) (new Random().nextDouble() * (200L)));
-                incomeMessage.setTimestamp(new Date().getTime());
-                log.debug("---->>> {}", incomeMessage.toString());
-                exchange.getOut().setBody(incomeMessage.toString());
+                metric.setValue((long) (new Random().nextDouble() * (200L)));
+                metric.setTimestamp(new Date().getTime());
+                log.debug("---->>> {}", metric);
+                exchange.getOut().setBody(metric, String.class);
             }).to("properties:{{income.connection}}");
     }
 }

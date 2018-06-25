@@ -20,7 +20,7 @@ public class MonitorProcessor {
         log.debug(">>>>> getMonitor");
         Metric metric = exchange.getIn().getBody(Metric.class);
 
-        Monitor monitor = monitorService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
+        Monitor monitor = monitorService.findOneByOriginAndMetric(metric.getOrigin(), metric.getName());
         log.debug("{}", metric);
 
         exchange.getOut().setHeader("monitor", monitor);
@@ -39,7 +39,7 @@ public class MonitorProcessor {
 
             Alert alert = new Alert(
                 metric.getOrigin(),
-                metric.getMetric(),
+                metric.getName(),
                 metric.getValue(),
                 metric.getTimestamp(),
                 monitor.getRule(),

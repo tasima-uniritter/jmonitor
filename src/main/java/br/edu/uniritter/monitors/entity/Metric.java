@@ -1,5 +1,7 @@
 package br.edu.uniritter.monitors.entity;
 
+import br.edu.uniritter.monitors.constant.MetricName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,8 @@ public class Metric {
     private String origin;
 
     @Enumerated(EnumType.STRING)
-    private br.edu.uniritter.monitors.constant.Metric metric;
+    @JsonProperty("metric")
+    private MetricName name;
 
     @NotNull
     private Long value;
