@@ -1,5 +1,5 @@
 package br.edu.uniritter.monitors.constant;
 
-public enum MetricName {
+public enum Metric {
     MEMORY_USAGE;
 }

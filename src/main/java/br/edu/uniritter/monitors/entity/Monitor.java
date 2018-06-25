@@ -1,6 +1,6 @@
 package br.edu.uniritter.monitors.entity;
 
-import br.edu.uniritter.monitors.constant.MetricName;
+import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +27,7 @@ public class Monitor {
     private String origin;
 
     @Enumerated(EnumType.STRING)
-    private MetricName metric;
+    private Metric metric;
 
     @Enumerated(EnumType.STRING)
     private Rule rule;

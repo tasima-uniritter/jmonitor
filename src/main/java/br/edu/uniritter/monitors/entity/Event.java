@@ -1,7 +1,6 @@
 package br.edu.uniritter.monitors.entity;
 
-import br.edu.uniritter.monitors.constant.MetricName;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import br.edu.uniritter.monitors.constant.Metric;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -17,12 +16,12 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Metric {
+public class Event {
+
     private String origin;
 
     @Enumerated(EnumType.STRING)
-    @JsonProperty("metric")
-    private MetricName name;
+    private Metric metric;
 
     @NotNull
     private Long value;
