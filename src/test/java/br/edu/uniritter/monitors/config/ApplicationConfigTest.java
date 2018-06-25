@@ -4,8 +4,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
+import pl.pojo.tester.api.assertion.Method;
 
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
 public class ApplicationConfigTest {
 
@@ -18,6 +22,20 @@ public class ApplicationConfigTest {
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void shouldPassAllPojoTests() {
+        // given
+        final Class<?> classUnderTest = ApplicationConfig.class;
+
+        // when
+        final Throwable result = catchThrowable(
+            () -> assertPojoMethodsFor(classUnderTest).testing(Method.GETTER).areWellImplemented()
+        );
+
+        // then
+        assertNull(result);
     }
 
     @Test

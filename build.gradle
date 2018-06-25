@@ -50,6 +50,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    testCompile group: 'pl.pojo',  name: 'pojo-tester', version: '0.7.6'
 }
 
 jacocoTestReport {
