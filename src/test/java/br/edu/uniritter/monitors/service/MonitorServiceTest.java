@@ -35,7 +35,7 @@ public class MonitorServiceTest {
 
         // given the mocked monitors
         List<Monitor> monitors = new ArrayList<Monitor>();
-        monitors.add(new Monitor(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L));
+        monitors.add(new Monitor(1L, "some-origin", Metric.valueOf("MEMORY_USAGE"), Rule.valueOf("GREATER_THAN"), 100L));
 
         // when I call service All
         Mockito.when(monitorRepository.findAll()).thenReturn(monitors);
