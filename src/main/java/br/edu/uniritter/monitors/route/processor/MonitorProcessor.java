@@ -3,6 +3,8 @@ package br.edu.uniritter.monitors.route.processor;
 import br.edu.uniritter.monitors.entity.Alert;
 import br.edu.uniritter.monitors.entity.Event;
 import br.edu.uniritter.monitors.entity.Monitor;
+import br.edu.uniritter.monitors.repository.EventRepository;
+import br.edu.uniritter.monitors.service.EventService;
 import br.edu.uniritter.monitors.service.MonitorService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
@@ -15,6 +17,13 @@ public class MonitorProcessor {
 
     @Autowired
     private MonitorService monitorService;
+
+    @Autowired
+    private EventService eventService;
+
+    public void saveEvent(Event event) {
+        log.debug("Event saved ---->>> {}", eventService.save(event));
+    }
 
     public void getMonitor(Exchange exchange) {
         log.debug(">>>>> getMonitor");

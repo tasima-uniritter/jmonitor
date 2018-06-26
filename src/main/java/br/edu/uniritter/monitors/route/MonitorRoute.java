@@ -15,6 +15,7 @@ public class MonitorRoute extends RouteBuilder {
                 .to("log:monitor1")
                 .unmarshal().json(JsonLibrary.Jackson, Event.class)
                 .to("log:monitor2")
+                .bean(MonitorProcessor.class, "saveEvent")
                 .bean(MonitorProcessor.class, "getMonitor")
                 .bean(MonitorProcessor.class, "setShouldAlert")
                 .choice()
