@@ -34,8 +34,8 @@ public class MonitorServiceTest {
     public void shouldCallThresholdRepositoryFindAll() {
 
         // given the mocked monitors
-        List<Monitor> monitors = new ArrayList<Monitor>();
-        monitors.add(new Monitor(1L, "some-origin", Metric.valueOf("MEMORY_USAGE"), Rule.valueOf("GREATER_THAN"), 100L));
+        List<Monitor> monitors = new ArrayList<>();
+        monitors.add(new Monitor());
 
         // when I call service All
         Mockito.when(monitorRepository.findAll()).thenReturn(monitors);
@@ -51,8 +51,7 @@ public class MonitorServiceTest {
     public void shouldCallThresholdRepositoryFindOneByOriginAndMetric() {
 
         // given the mocked monitor
-        Monitor monitor = new Monitor(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
-
+        Monitor monitor = new Monitor();
 
         // when I call service findOneByOriginAndMetric
         Mockito.when(monitorRepository.findOneByOriginAndMetric("some-origin", Metric.MEMORY_USAGE)).thenReturn(monitor);

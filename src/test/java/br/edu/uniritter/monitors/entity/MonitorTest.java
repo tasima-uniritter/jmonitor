@@ -1,12 +1,16 @@
 package br.edu.uniritter.monitors.entity;
 
-import br.edu.uniritter.monitors.constant.Metric;
 import br.edu.uniritter.monitors.constant.Rule;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.mockito.Mockito;
 import pl.pojo.tester.api.assertion.Method;
 
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
 public class MonitorTest {
@@ -28,26 +32,38 @@ public class MonitorTest {
     }
 
     @Test
-    public void shouldReturnTrueWhenMetricGreaterThanThresholdExceed() {
+    public void compareShouldCallRuleCompare() {
 
         // given
-        Monitor monitor = new Monitor(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
+        Rule rule = mock(Rule.class);
+        Monitor monitor = new Monitor();
+        monitor.setThreshold(anyLong());
+        when(rule.compare(anyLong(), monitor.getThreshold())).thenReturn(true);
+        monitor.setRule(rule);
 
         // when
-        Boolean exceed = monitor.compare(500L);
+        Boolean exceed = monitor.compare(100L);
 
-        assertEquals(true, exceed);
+        // then
+        verify(rule, times(1)).compare(eq(100L), eq(monitor.getThreshold()));
+        assertTrue(exceed);
     }
 
     @Test
-    public void shouldReturnFalseWhenMetricGreaterThanThresholdDoNotExceed() {
+    public void shouldReturnJsonWhenToStringIsCalled() {
+        assertNotNull(new Monitor().toString());
+    }
 
-        // given
-        Monitor monitor = new Monitor(1L, "some-origin", Metric.MEMORY_USAGE, Rule.GREATER_THAN, 100L);
+    @Test
+    public void testJsonProcessingException() throws JsonProcessingException {
+        ObjectMapper objectMapper = mock(ObjectMapper.class);
+        Mockito.when(objectMapper.writeValueAsString(any())).thenThrow(
+            new JsonProcessingException("Error parsing the object to json string. ") {
+            }
+        );
+        Monitor monitor = new Monitor();
+        monitor.setObjectMapper(objectMapper);
 
-        // when
-        Boolean exceed = monitor.compare(99L);
-
-        assertEquals(false, exceed);
+        assertEquals("", monitor.toString());
     }
 }
