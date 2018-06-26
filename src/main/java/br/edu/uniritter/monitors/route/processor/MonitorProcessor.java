@@ -18,13 +18,13 @@ public class MonitorProcessor {
 
     public void getMonitor(Exchange exchange) {
         log.debug(">>>>> getMonitor");
-        Event metric = exchange.getIn().getBody(Event.class);
+        Event event = exchange.getIn().getBody(Event.class);
 
-        Monitor monitor = monitorService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
-        log.debug("{}", metric);
+        Monitor monitor = monitorService.findOneByOriginAndMetric(event.getOrigin(), event.getMetric());
+        log.debug("monitor {}found {}", monitor == null ? "not " : "", monitor);
 
         exchange.getOut().setHeader("monitor", monitor);
-        exchange.getOut().setBody(metric);
+        exchange.getOut().setBody(event);
         log.debug("<<<<< getMonitor");
     }
 
@@ -37,14 +37,13 @@ public class MonitorProcessor {
         if (monitor != null && monitor.compare(metric.getValue())) {
             exchange.getOut().setHeader("shouldAlert", true);
 
-            Alert alert = new Alert(
-                metric.getOrigin(),
-                metric.getMetric(),
-                metric.getValue(),
-                metric.getTimestamp(),
-                monitor.getRule(),
-                monitor.getThreshold()
-            );
+            Alert alert = new Alert();
+            alert.setOrigin(metric.getOrigin());
+            alert.setMetric(metric.getMetric());
+            alert.setValue(metric.getValue());
+            alert.setTimestamp(metric.getTimestamp());
+            alert.setRule(monitor.getRule());
+            alert.setThreshold(monitor.getThreshold());
             exchange.getOut().setBody(alert);
             log.debug("shouldAlert true {} > {} {}",
                 metric.getValue(),
