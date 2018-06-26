@@ -1,7 +1,7 @@
 package br.edu.uniritter.monitors.route.processor;
 
 import br.edu.uniritter.monitors.entity.Alert;
-import br.edu.uniritter.monitors.entity.Metric;
+import br.edu.uniritter.monitors.entity.Event;
 import br.edu.uniritter.monitors.entity.Monitor;
 import br.edu.uniritter.monitors.service.MonitorService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class MonitorProcessor {
 
     public void getMonitor(Exchange exchange) {
         log.debug(">>>>> getMonitor");
-        Metric metric = exchange.getIn().getBody(Metric.class);
+        Event metric = exchange.getIn().getBody(Event.class);
 
         Monitor monitor = monitorService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
         log.debug("{}", metric);
@@ -31,7 +31,7 @@ public class MonitorProcessor {
     public void setShouldAlert(Exchange exchange) {
         log.debug(">>>>> setShouldAlert");
 
-        Metric metric = exchange.getIn().getBody(Metric.class);
+        Event metric = exchange.getIn().getBody(Event.class);
         Monitor monitor;
         monitor = exchange.getIn().getHeader("monitor", Monitor.class);
         if (monitor != null && monitor.compare(metric.getValue())) {

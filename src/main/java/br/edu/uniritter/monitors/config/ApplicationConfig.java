@@ -23,10 +23,8 @@ public class ApplicationConfig {
     @Value("${amqp-username}")
     private String amqpUsername;
 
-    private String amqpPassword;
-
     public String getAmqpPassword() {
-        amqpPassword = dotenv.get("AMQP_SERVICE_PASSWORD");
+        String amqpPassword = dotenv.get("AMQP_SERVICE_PASSWORD");
         if (amqpPassword == null) {
             throw new IllegalArgumentException("Missing AMQP_SERVICE_PASSWORD environment variable");
         }
