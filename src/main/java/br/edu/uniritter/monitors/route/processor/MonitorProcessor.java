@@ -18,13 +18,13 @@ public class MonitorProcessor {
 
     public void getMonitor(Exchange exchange) {
         log.debug(">>>>> getMonitor");
-        Event metric = exchange.getIn().getBody(Event.class);
+        Event event = exchange.getIn().getBody(Event.class);
 
-        Monitor monitor = monitorService.findOneByOriginAndMetric(metric.getOrigin(), metric.getMetric());
-        log.debug("{}", metric);
+        Monitor monitor = monitorService.findOneByOriginAndMetric(event.getOrigin(), event.getMetric());
+        log.debug("monitor {}found {}", monitor == null ? "not " : "", monitor);
 
         exchange.getOut().setHeader("monitor", monitor);
-        exchange.getOut().setBody(metric);
+        exchange.getOut().setBody(event);
         log.debug("<<<<< getMonitor");
     }
 

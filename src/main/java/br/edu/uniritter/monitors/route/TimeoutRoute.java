@@ -15,10 +15,10 @@ public class TimeoutRoute extends RouteBuilder {
     @Override
     public void configure() {
         Event event = new Event();
-        event.setOrigin("PC-0");
         event.setMetric(Metric.MEMORY_USAGE);
         from("timer:timeout?period=10000")
             .process(exchange -> {
+                event.setOrigin("PC-" + (new Random().nextInt(2)));
                 event.setValue((long) (new Random().nextDouble() * (200L)));
                 event.setTimestamp(new Date().getTime());
                 log.debug("---->>> {}", event);
