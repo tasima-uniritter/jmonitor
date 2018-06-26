@@ -1,6 +1,7 @@
 package br.edu.uniritter.monitors.entity;
 
 import br.edu.uniritter.monitors.constant.Metric;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,10 @@ import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Event {
+    @JsonIgnore
+    ObjectMapper objectMapper = new ObjectMapper();
 
     private String origin;
 
@@ -30,7 +32,6 @@ public class Event {
 
     @Override
     public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {

@@ -53,6 +53,10 @@ dependencies {
     testCompile group: 'pl.pojo',  name: 'pojo-tester', version: '0.7.6'
 }
 
+jacoco {
+    toolVersion = "0.8.1"
+}
+
 jacocoTestReport {
     reports {
         xml.enabled false

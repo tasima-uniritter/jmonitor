@@ -37,14 +37,13 @@ public class MonitorProcessor {
         if (monitor != null && monitor.compare(metric.getValue())) {
             exchange.getOut().setHeader("shouldAlert", true);
 
-            Alert alert = new Alert(
-                metric.getOrigin(),
-                metric.getMetric(),
-                metric.getValue(),
-                metric.getTimestamp(),
-                monitor.getRule(),
-                monitor.getThreshold()
-            );
+            Alert alert = new Alert();
+            alert.setOrigin(metric.getOrigin());
+            alert.setMetric(metric.getMetric());
+            alert.setValue(metric.getValue());
+            alert.setTimestamp(metric.getTimestamp());
+            alert.setRule(monitor.getRule());
+            alert.setThreshold(monitor.getThreshold());
             exchange.getOut().setBody(alert);
             log.debug("shouldAlert true {} > {} {}",
                 metric.getValue(),

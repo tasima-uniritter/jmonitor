@@ -14,7 +14,9 @@ import java.util.Random;
 public class TimeoutRoute extends RouteBuilder {
     @Override
     public void configure() {
-        Event event = new Event("PC-0", Metric.MEMORY_USAGE, 200L, new Date().getTime());
+        Event event = new Event();
+        event.setOrigin("PC-0");
+        event.setMetric(Metric.MEMORY_USAGE);
         from("timer:timeout?period=10000")
             .process(exchange -> {
                 event.setValue((long) (new Random().nextDouble() * (200L)));
