@@ -36,7 +36,7 @@ public class EventServiceTest {
         // when I call service All
         when(eventRepository.findAll()).thenReturn(expected);
 
-        List<Event> events = eventService.getExipired(1L);
+        List<Event> events = eventService.getExpired(1L);
 
         // then I expect all monitors
         assertSame(expected, events);

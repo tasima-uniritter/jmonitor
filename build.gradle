@@ -40,16 +40,14 @@ dependencies {
     compile("org.springframework:spring-jdbc")
     compile group: 'org.apache.camel', name: 'camel-amqp', version: camelDependenciesVersion
     compile group: 'org.apache.camel', name: 'camel-rabbitmq', version: camelDependenciesVersion
-    compile group: 'org.apache.camel', name: 'camel-gson', version: camelDependenciesVersion
     compile group: 'org.apache.camel', name: 'camel-jackson', version: camelDependenciesVersion
     compile group: 'io.github.cdimascio', name: 'java-dotenv', version: '3.1.1'
     runtime('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
     compile("javax.xml.bind:jaxb-api:2.3.0")
-    compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta2'
     testCompile group: 'pl.pojo',  name: 'pojo-tester', version: '0.7.6'
 }
 

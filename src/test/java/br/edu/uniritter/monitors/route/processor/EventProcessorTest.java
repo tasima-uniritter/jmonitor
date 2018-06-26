@@ -11,13 +11,13 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class MonitorProcessorTest {
+public class EventProcessorTest {
 
     @Mock
     private EventService eventService;
 
     @InjectMocks
-    private MonitorProcessor monitorProcessor;
+    private EventProcessor eventProcessor;
 
     @Before
     public void initMocks() {
@@ -28,7 +28,7 @@ public class MonitorProcessorTest {
     public void saveEventShouldCallEventService() {
         Event event = new Event();
         when(eventService.save(any(Event.class))).thenReturn(event);
-        monitorProcessor.saveEvent(event);
+        eventProcessor.saveEvent(event);
 
         verify(eventService, times(1)).save(event);
     }

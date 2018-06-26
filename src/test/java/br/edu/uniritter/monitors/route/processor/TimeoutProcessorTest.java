@@ -34,10 +34,10 @@ public class TimeoutProcessorTest {
         Event event;
         List<Event> events = new ArrayList<>();
 
-        when(eventService.getExipired(any(Long.class))).thenReturn(events);
+        when(eventService.getExpired(any(Long.class))).thenReturn(events);
 
         assertEquals(events, timeoutProcessor.getExpiredEvents());
 
-        verify(eventService, times(1)).getExipired(any(Long.class));
+        verify(eventService, times(1)).getExpired(any(Long.class));
     }
 }

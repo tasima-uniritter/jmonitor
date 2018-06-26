@@ -12,7 +12,9 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    public List<Event> getExipired(Long threshold) {
+    public List<Event> getExpired(Long threshold) {
+        // @TODO return true expired events
+        // now() - event.timestamp > threshold
         return eventRepository.findAll();
     }
 
