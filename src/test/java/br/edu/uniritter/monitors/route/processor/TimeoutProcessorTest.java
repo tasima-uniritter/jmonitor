@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 public class TimeoutProcessorTest {
@@ -38,10 +39,12 @@ public class TimeoutProcessorTest {
         }};
         Calendar calendar = Calendar.getInstance();
 
-        when(eventService.getExpired(any(Calendar.class), any(Long.class))).thenReturn(events);
+        when(eventService.getExpired(any(Calendar.class), anyLong())).thenReturn(events);
 
-        assertEquals(events, timeoutProcessor.getExpiredEvents(calendar));
+        List<Event> expired = timeoutProcessor.getExpiredEvents(calendar, 1L);
 
-        verify(eventService, times(1)).getExpired(eq(calendar), any(Long.class));
+        assertEquals(events, expired);
+
+        verify(eventService, times(1)).getExpired(eq(calendar), anyLong());
     }
 }

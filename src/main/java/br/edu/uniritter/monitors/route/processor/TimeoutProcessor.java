@@ -14,7 +14,7 @@ public class TimeoutProcessor {
     @Autowired
     private EventService eventService;
 
-    public List<Event> getExpiredEvents(Calendar calendar) {
-        return eventService.getExpired(calendar, 1L);
+    public List<Event> getExpiredEvents(Calendar calendar, Long threshold) {
+        return eventService.getExpired(calendar, threshold);
     }
 }

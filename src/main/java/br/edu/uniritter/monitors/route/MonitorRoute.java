@@ -4,11 +4,14 @@ import br.edu.uniritter.monitors.entity.Event;
 import br.edu.uniritter.monitors.route.processor.AlertProcessor;
 import br.edu.uniritter.monitors.route.processor.EventProcessor;
 import br.edu.uniritter.monitors.route.processor.MonitorProcessor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class MonitorRoute extends RouteBuilder {
     @Autowired
@@ -34,10 +37,10 @@ public class MonitorRoute extends RouteBuilder {
                 .bean(alertProcessor, "buildAlert")
                 .to("log:alertFromMonitor")
                 .marshal().json(JsonLibrary.Jackson, true)
-                .log("Message will send to alert queue ${body}")
+                .log(LoggingLevel.INFO, log.getName(), "Message will send to alert queue ${body}")
                 .to("properties:{{outcome.connection}}")
             .otherwise()
-                .log("Message will not send to alert queue")
+                .log(LoggingLevel.INFO, log.getName(),"Message will not send to alert queue")
             .end();
     }
 }
