@@ -25,7 +25,7 @@ public enum Rule {
     },
     TIMEOUT() {
         public Boolean compare(Long value, Long threshold) {
-            return value > threshold; // @TODO really need it?
+            return value > threshold;
         }
     };
 
