@@ -1,19 +1,17 @@
 package br.edu.uniritter.monitors.route;
 
 import br.edu.uniritter.monitors.constant.Metric;
-import br.edu.uniritter.monitors.constant.Rule;
 import br.edu.uniritter.monitors.entity.Event;
 import br.edu.uniritter.monitors.route.processor.AlertProcessor;
 import br.edu.uniritter.monitors.route.processor.MonitorProcessor;
 import br.edu.uniritter.monitors.route.processor.TimeoutProcessor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.camel.Expression;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Random;
 
 @Slf4j
@@ -23,14 +21,20 @@ public class TimeoutRoute extends RouteBuilder {
     private MonitorProcessor monitorProcessor;
 
     @Autowired
+    private TimeoutProcessor timeoutProcessor;
+
+    @Autowired
     private AlertProcessor alertProcessor;
 
     @Override
     public void configure() {
         Event event = new Event();
+        Calendar calendar = Calendar.getInstance();
         event.setMetric(Metric.MEMORY_USAGE);
         from("timer:timeout?period=10000")
-            .bean(TimeoutProcessor.class, "getExpiredEvents")
+            .process(exchange -> exchange.getOut().setBody(
+                timeoutProcessor.getExpiredEvents(Calendar.getInstance())
+            ))
             .to("log:eventsExpired")
             .split(body())
             .bean(monitorProcessor, "getMonitor")
@@ -50,7 +54,7 @@ public class TimeoutRoute extends RouteBuilder {
             .process(exchange -> {
                 event.setOrigin("PC-" + (new Random().nextInt(2)));
                 event.setValue((long) (new Random().nextDouble() * (200L)));
-                event.setTimestamp(new Date().getTime());
+                event.setTimestamp(Calendar.getInstance().getTimeInMillis());
                 log.debug("---->>> {}", event);
                 exchange.getOut().setBody(event.toString());
             }).to("properties:{{income.connection}}")

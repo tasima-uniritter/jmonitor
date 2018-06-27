@@ -9,8 +9,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.when;
 
@@ -28,18 +30,28 @@ public class EventServiceTest {
     }
 
     @Test
-    public void getExipiredShouldCallEventsRepositoryFindAll() {
+    public void getExpiredShouldCallEventsRepositoryFindAll() {
         // given the mocked events
-        List<Event> expected = new ArrayList<>();
-        expected.add(new Event());
+        Long threshold = 30000L;
+        Calendar calendar = Calendar.getInstance();
+        Event unexpired = new Event();
+        unexpired.setTimestamp(calendar.getTimeInMillis());
+        Event expired = new Event();
+        expired.setTimestamp(calendar.getTimeInMillis() - threshold - 1);
+        List<Event> events = new ArrayList<Event>() {{
+            add(unexpired);
+            add(expired);
+        }};
+        List<Event> expected = new ArrayList<Event>() {{
+            add(expired);
+        }};
+        when(eventRepository.findAll()).thenReturn(events);
 
-        // when I call service All
-        when(eventRepository.findAll()).thenReturn(expected);
+        // when I call service getExpired
+        List<Event> returned = eventService.getExpired(calendar, threshold);
 
-        List<Event> events = eventService.getExpired(1L);
-
-        // then I expect all monitors
-        assertSame(expected, events);
+        // then I expect expired events
+        assertEquals(expected, returned);
 
     }
 
