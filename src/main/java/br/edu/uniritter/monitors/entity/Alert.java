@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "objectMapper")
 public class Alert {
     @JsonIgnore
     private ObjectMapper objectMapper = new ObjectMapper();
