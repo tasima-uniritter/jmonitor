@@ -1,6 +1,7 @@
 package br.edu.uniritter.monitors.api;
 
 import br.edu.uniritter.monitors.dto.ApiErrorDTO;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,8 @@ public class ExceptionHandling {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public @ResponseBody
-    ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    @ResponseBody
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         ApiErrorDTO apiError = parseErrors(ex.getBindingResult().getAllErrors(), HttpStatus.BAD_REQUEST, "Validation Error");
 
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
