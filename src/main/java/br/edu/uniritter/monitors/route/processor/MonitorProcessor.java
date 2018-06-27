@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MonitorProcessor {
 
-    private static final String MONITOR_HEADER = "monitor";
+    public static final String MONITOR_HEADER = "monitor";
 
     @Autowired
     private MonitorService monitorService;
