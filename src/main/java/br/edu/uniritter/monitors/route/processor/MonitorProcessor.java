@@ -1,10 +1,7 @@
 package br.edu.uniritter.monitors.route.processor;
 
-import br.edu.uniritter.monitors.entity.Alert;
 import br.edu.uniritter.monitors.entity.Event;
 import br.edu.uniritter.monitors.entity.Monitor;
-import br.edu.uniritter.monitors.repository.EventRepository;
-import br.edu.uniritter.monitors.service.EventService;
 import br.edu.uniritter.monitors.service.MonitorService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
@@ -15,15 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class MonitorProcessor {
 
+    public static final String MONITOR_HEADER = "monitor";
+
     @Autowired
     private MonitorService monitorService;
-
-    @Autowired
-    private EventService eventService;
-
-    public void saveEvent(Event event) {
-        log.debug("Event saved ---->>> {}", eventService.save(event));
-    }
 
     public void getMonitor(Exchange exchange) {
         log.debug(">>>>> getMonitor");
@@ -32,7 +24,7 @@ public class MonitorProcessor {
         Monitor monitor = monitorService.findOneByOriginAndMetric(event.getOrigin(), event.getMetric());
         log.debug("monitor {}found {}", monitor == null ? "not " : "", monitor);
 
-        exchange.getOut().setHeader("monitor", monitor);
+        exchange.getOut().setHeader(MONITOR_HEADER, monitor);
         exchange.getOut().setBody(event);
         log.debug("<<<<< getMonitor");
     }
@@ -40,24 +32,16 @@ public class MonitorProcessor {
     public void setShouldAlert(Exchange exchange) {
         log.debug(">>>>> setShouldAlert");
 
-        Event metric = exchange.getIn().getBody(Event.class);
+        Event event = exchange.getIn().getBody(Event.class);
         Monitor monitor;
-        monitor = exchange.getIn().getHeader("monitor", Monitor.class);
-        if (monitor != null && monitor.compare(metric.getValue())) {
+        monitor = exchange.getIn().getHeader(MONITOR_HEADER, Monitor.class);
+        if (monitor != null && monitor.compare(event.getValue())) {
+            exchange.getOut().setHeader(MONITOR_HEADER, monitor);
             exchange.getOut().setHeader("shouldAlert", true);
-
-            Alert alert = new Alert();
-            alert.setOrigin(metric.getOrigin());
-            alert.setMetric(metric.getMetric());
-            alert.setValue(metric.getValue());
-            alert.setTimestamp(metric.getTimestamp());
-            alert.setRule(monitor.getRule());
-            alert.setThreshold(monitor.getThreshold());
-            exchange.getOut().setBody(alert);
-            log.debug("shouldAlert true {} > {} {}",
-                metric.getValue(),
-                monitor.getThreshold(),
-                alert);
+            exchange.getOut().setBody(event);
+            log.debug("shouldAlert true {} > {}",
+                event.getValue(),
+                monitor.getThreshold());
         }
 
         log.debug("<<<<< setShouldAlert");

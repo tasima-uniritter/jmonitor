@@ -1,6 +1,8 @@
 language: java
 sudo: false
 install: true
+env:
+  - AMQP_SERVICE_PASSWORD=test-value
 addons:
   sonarcloud:
     organization: "tasima-uniritter"

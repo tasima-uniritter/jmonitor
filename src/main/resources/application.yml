@@ -41,6 +41,8 @@ income:
 outcome:
   connection: amqp:queue:a-monitor-alerts
 
+default-threshold: 5000 # milliseconds
+
 ---
 spring:
   profiles: heroku

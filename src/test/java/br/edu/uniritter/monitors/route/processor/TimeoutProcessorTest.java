@@ -9,10 +9,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 public class TimeoutProcessorTest {
@@ -31,13 +33,18 @@ public class TimeoutProcessorTest {
 
     @Test
     public void getExpiredEventsShouldCallEventService() {
-        Event event;
-        List<Event> events = new ArrayList<>();
+        Event event = new Event();
+        List<Event> events = new ArrayList<Event>() {{
+            add(event);
+        }};
+        Calendar calendar = Calendar.getInstance();
 
-        when(eventService.getExipired(any(Long.class))).thenReturn(events);
+        when(eventService.getExpired(any(Calendar.class), anyLong())).thenReturn(events);
 
-        assertEquals(events, timeoutProcessor.getExpiredEvents());
+        List<Event> expired = timeoutProcessor.getExpiredEvents(calendar, 1L);
 
-        verify(eventService, times(1)).getExipired(any(Long.class));
+        assertEquals(events, expired);
+
+        verify(eventService, times(1)).getExpired(eq(calendar), anyLong());
     }
 }

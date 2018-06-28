@@ -23,6 +23,9 @@ public class ApplicationConfig {
     @Value("${amqp-username}")
     private String amqpUsername;
 
+    @Value("${default-threshold}")
+    private Long defaultThreshold;
+
     public String getAmqpPassword() {
         String amqpPassword = dotenv.get("AMQP_SERVICE_PASSWORD");
         if (amqpPassword == null) {

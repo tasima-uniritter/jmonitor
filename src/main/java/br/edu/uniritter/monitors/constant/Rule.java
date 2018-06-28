@@ -22,6 +22,11 @@ public enum Rule {
     },
     NOT_EQUAL() {
         public Boolean compare(Long value, Long threshold) { return !value.equals(threshold); }
+    },
+    TIMEOUT() {
+        public Boolean compare(Long value, Long threshold) {
+            return value > threshold;
+        }
     };
 
     public abstract Boolean compare(Long value, Long threshold);
