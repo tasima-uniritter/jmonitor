@@ -28,9 +28,11 @@ public class Monitor {
     @NotNull
     private String origin;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Metric metric;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Rule rule;
 
