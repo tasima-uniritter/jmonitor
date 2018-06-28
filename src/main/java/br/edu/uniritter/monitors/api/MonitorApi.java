@@ -22,6 +22,6 @@ public class MonitorApi {
 
     @PostMapping
     public Monitor store(@Valid @RequestBody Monitor monitor) {
-        return monitorService.store(monitor);
+        return monitorService.save(monitor);
     }
 }

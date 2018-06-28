@@ -1,7 +1,6 @@
 package br.edu.uniritter.monitors.api;
 
 import br.edu.uniritter.monitors.dto.ApiErrorDTO;
-import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

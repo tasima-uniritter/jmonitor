@@ -22,7 +22,7 @@ public class MonitorService {
         return monitorRepository.findOneByOriginAndMetric(origin, metric);
     }
 
-    public Monitor store(Monitor monitor) {
+    public Monitor save(Monitor monitor) {
         return monitorRepository.save(monitor);
     }
 }
