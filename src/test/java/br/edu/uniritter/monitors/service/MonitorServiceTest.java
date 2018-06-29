@@ -1,7 +1,6 @@
 package br.edu.uniritter.monitors.service;
 
 import br.edu.uniritter.monitors.constant.Metric;
-import br.edu.uniritter.monitors.constant.Rule;
 import br.edu.uniritter.monitors.entity.Monitor;
 import br.edu.uniritter.monitors.repository.MonitorRepository;
 import org.junit.Before;
@@ -31,7 +30,7 @@ public class MonitorServiceTest {
     }
 
     @Test
-    public void shouldCallThresholdRepositoryFindAll() {
+    public void shouldCallMonitorRepositoryFindAll() {
 
         // given the mocked monitors
         List<Monitor> monitors = new ArrayList<>();
@@ -48,7 +47,7 @@ public class MonitorServiceTest {
     }
 
     @Test
-    public void shouldCallThresholdRepositoryFindOneByOriginAndMetric() {
+    public void shouldCallMonitorRepositoryFindOneByOriginAndMetric() {
 
         // given the mocked monitor
         Monitor monitor = new Monitor();
@@ -62,5 +61,20 @@ public class MonitorServiceTest {
         assertEquals(monitor.getId(), monitorFounded.getId());
     }
 
+    @Test
+    public void shouldCallMonitorRepositorySave() {
+
+        // given the mocked monitor
+        Monitor monitor = new Monitor();
+        monitor.setId(999L);
+
+        // when I call service save
+        Mockito.when(monitorRepository.save(monitor)).thenReturn(monitor);
+
+        Monitor expectedMonitor = monitorService.save(monitor);
+
+        // then I expect the monitor
+        assertSame(monitor, expectedMonitor);
+    }
 
 }
