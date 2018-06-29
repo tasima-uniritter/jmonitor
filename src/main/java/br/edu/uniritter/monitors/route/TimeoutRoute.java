@@ -54,14 +54,14 @@ public class TimeoutRoute extends RouteBuilder {
                 .log(LoggingLevel.INFO, log.getName(),"Message will not send to alert queue")
         ;
 
-        from("timer:timeout?period=5000")
-            .process(exchange -> {
-                event.setOrigin("PC-" + (new Random().nextInt(2)));
-                event.setValue((long) (new Random().nextDouble() * (200L)));
-                event.setTimestamp(Calendar.getInstance().getTimeInMillis());
-                log.debug("---->>> {}", event);
-                exchange.getOut().setBody(event.toString());
-            }).to("properties:{{income.connection}}")
-        ;
+        // from("timer:timeout?period=5000")
+        //     .process(exchange -> {
+        //         event.setOrigin("PC-" + (new Random().nextInt(2)));
+        //         event.setValue((long) (new Random().nextDouble() * (200L)));
+        //         event.setTimestamp(Calendar.getInstance().getTimeInMillis());
+        //         log.debug("---->>> {}", event);
+        //         exchange.getOut().setBody(event.toString());
+        //     }).to("properties:{{income.connection}}")
+        // ;
     }
 }

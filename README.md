@@ -28,3 +28,28 @@ with this content
 ```
 AMQP_SERVICE_PASSWORD=******
 ```
+
+### Message pattern
+
+The application expect an event like this:
+
+```json
+{
+  "origin": "PC-0",
+  "metric": "MEMORY_USAGE",
+  "value": 500,
+  "timestamp": 1530227658230
+}
+````
+
+And send alerts like this:
+
+```json
+{
+  "metric" : "MEMORY_USAGE",
+  "value" : 51051,
+  "timestamp" : 1530227336566,
+  "rule" : "TIMEOUT",
+  "threshold" : 5000
+}
+```
