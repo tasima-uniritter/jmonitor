@@ -18,14 +18,14 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionHandling {
     private ApiErrorDTO parseErrors(List<ObjectError> errors, HttpStatus status, String message) {
-        List<String> parsedErrors = new ArrayList<String>();
+        List<String> parsedErrors = new ArrayList<>();
 
         for (ObjectError error : errors) {
             String name = error instanceof FieldError ? ((FieldError) error).getField() : error.getObjectName();
             parsedErrors.add(name + ": " + error.getDefaultMessage());
         }
 
-        return new ApiErrorDTO(HttpStatus.BAD_REQUEST, "Validation error", parsedErrors);
+        return new ApiErrorDTO(status, message, parsedErrors);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -34,6 +34,6 @@ public class ExceptionHandling {
     public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         ApiErrorDTO apiError = parseErrors(ex.getBindingResult().getAllErrors(), HttpStatus.BAD_REQUEST, "Validation Error");
 
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

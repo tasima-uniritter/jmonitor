@@ -2,9 +2,7 @@ package br.edu.uniritter.monitors.config;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.Getter;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Getter
