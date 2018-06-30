@@ -34,7 +34,7 @@ public class MonitorRoute extends RouteBuilder {
             .bean(monitorProcessor, "setShouldAlert")
             .choice()
             .when(simple("${header.shouldAlert} == true"))
-                .bean(alertProcessor, "buildAlert")
+            .bean(alertProcessor, "buildAlert")
                 .to("log:alertFromMonitor")
                 .marshal().json(JsonLibrary.Jackson, true)
                 .log(LoggingLevel.INFO, log.getName(), "Message will send to alert queue ${body}")

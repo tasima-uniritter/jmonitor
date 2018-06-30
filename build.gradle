@@ -38,6 +38,7 @@ dependencies {
     compile("org.apache.camel:camel-spring-boot-starter:${camelDependenciesVersion}")
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile("org.springframework:spring-jdbc")
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '2.0.0'
     compile group: 'org.apache.camel', name: 'camel-amqp', version: camelDependenciesVersion
     compile group: 'org.apache.camel', name: 'camel-rabbitmq', version: camelDependenciesVersion
     compile group: 'org.apache.camel', name: 'camel-jackson', version: camelDependenciesVersion
@@ -49,7 +50,6 @@ dependencies {
     testCompile group: 'io.github.benas', name: 'random-beans', version: '3.7.0'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta2'
-    testCompile group: 'pl.pojo',  name: 'pojo-tester', version: '0.7.6'
 }
 
 jacoco {

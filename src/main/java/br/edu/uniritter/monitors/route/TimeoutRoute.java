@@ -1,8 +1,6 @@
 package br.edu.uniritter.monitors.route;
 
 import br.edu.uniritter.monitors.config.ApplicationConfig;
-import br.edu.uniritter.monitors.constant.Metric;
-import br.edu.uniritter.monitors.entity.Event;
 import br.edu.uniritter.monitors.route.processor.AlertProcessor;
 import br.edu.uniritter.monitors.route.processor.MonitorProcessor;
 import br.edu.uniritter.monitors.route.processor.TimeoutProcessor;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
-import java.util.Random;
 
 @Slf4j
 @Component
@@ -33,8 +30,6 @@ public class TimeoutRoute extends RouteBuilder {
 
     @Override
     public void configure() {
-        Event event = new Event();
-        event.setMetric(Metric.MEMORY_USAGE);
         from("timer:timeout?period=10000")
             .process(exchange -> exchange.getOut().setBody(
                 timeoutProcessor.getExpiredEvents(Calendar.getInstance(), applicationConfig.getDefaultThreshold())
@@ -53,15 +48,5 @@ public class TimeoutRoute extends RouteBuilder {
             .otherwise()
                 .log(LoggingLevel.INFO, log.getName(),"Message will not send to alert queue")
         ;
-
-        // from("timer:timeout?period=5000")
-        //     .process(exchange -> {
-        //         event.setOrigin("PC-" + (new Random().nextInt(2)));
-        //         event.setValue((long) (new Random().nextDouble() * (200L)));
-        //         event.setTimestamp(Calendar.getInstance().getTimeInMillis());
-        //         log.debug("---->>> {}", event);
-        //         exchange.getOut().setBody(event.toString());
-        //     }).to("properties:{{income.connection}}")
-        // ;
     }
 }

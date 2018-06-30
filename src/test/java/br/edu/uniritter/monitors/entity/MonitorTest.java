@@ -5,32 +5,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.mockito.Mockito;
-import pl.pojo.tester.api.assertion.Method;
 
-import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
 public class MonitorTest {
-
-    @Test
-    public void shouldPassAllPojoTests() {
-        // given
-        final Class<?> classUnderTest = Monitor.class;
-
-        // when
-        final Throwable result = catchThrowable(
-            () -> assertPojoMethodsFor(classUnderTest)
-                .testing(Method.CONSTRUCTOR, Method.GETTER, Method.SETTER, Method.EQUALS)
-                .areWellImplemented()
-        );
-
-        // then
-        assertNull(result);
-    }
-
     @Test
     public void compareShouldCallRuleCompare() {
 
