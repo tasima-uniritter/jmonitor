@@ -27,6 +27,7 @@ with this content
 
 ```
 AMQP_SERVICE_PASSWORD=******
+JAVA_OPTS="-Xmx168m -Xms168m -XX:PermSize=32m -XX:MaxPermSize=32m -Xss1m -XX:+UseCompressedOops"
 ```
 
 ### Message pattern
