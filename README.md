@@ -1,6 +1,6 @@
 # pda-a-monitors #
 
-[![Build Status](https://travis-ci.org/tasima-uniritter/pda-a-monitors.svg?branch=master)](https://travis-ci.org/tasima-uniritter/pda-a-monitors) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=br.edu.uniritter%3Amonitors&metric=coverage)](https://sonarcloud.io/dashboard?id=br.edu.uniritter%3Amonitors)
+[![Build Status](https://travis-ci.org/tasima-uniritter/pda-a-monitors.svg?branch=master)](https://travis-ci.org/tasima-uniritter/pda-a-monitors) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=br.edu.uniritter%3Amonitors&metric=coverage)](https://sonarcloud.io/dashboard?id=br.edu.uniritter%3Amonitors) [![Deployed on Heroku](https://img.shields.io/badge/%E2%86%91%20Deployed%20on-Heroku-7056bf.svg?style=flat-square)](https://pda-a-monitors.herokuapp.com/)
 
 ### How to  ###
 
@@ -46,10 +46,33 @@ And send alerts like this:
 
 ```json
 {
+  "origin": "PC-0",
+  "metric" : "MEMORY_USAGE",
+  "value" : 500,
+  "timestamp" : 1530227285565,
+  "rule" : "GREATER_THAN",
+  "threshold" : 250
+}
+```
+
+Or, on timeout route:
+
+```json
+{
+  "origin": "PC-0",
   "metric" : "MEMORY_USAGE",
   "value" : 51051,
   "timestamp" : 1530227336566,
   "rule" : "TIMEOUT",
   "threshold" : 5000
 }
+```
+
+Deploy
+------
+
+Application is currently stopped, to start run
+
+```
+heroku ps:scale web=1
 ```
